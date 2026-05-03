@@ -1,8 +1,8 @@
 const settings = {
-  packname: 'Farhanbot-MD',
-  author: 'Farhan',
-  botName: "Farhanbot-MD",
-  botOwner: 'Farhan', // Your name
+  packname: 'FarhanBot-MD',
+  author: 'FSGAMERz',
+  botName: "FarhanBot-MD",
+  botOwner: 'FSGAMERz', // Your name
   ownerNumber: '919876543210', //Set your number here without + symbol, just add country code & number without any space
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
   commandMode: "public",
