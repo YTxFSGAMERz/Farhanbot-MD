@@ -10,7 +10,7 @@ pinned: false
 # FarhanBot-MD
 
 <div align="center">
-  <img src="https://img.shields.io/badge/FSGAMERz--MD-blue?style=for-the-badge&logo=whatsapp" alt="FarhanBot-MD">
+  <img src="https://img.shields.io/badge/YTxFSGAMERz--MD-blue?style=for-the-badge&logo=whatsapp" alt="FarhanBot-MD">
 </div>
 
 ---
@@ -32,7 +32,7 @@ pinned: false
 FarhanBot-MD is optimized for cloud environments. Use the following secrets for Firebase-backed persistence:
 - `FIREBASE_CONFIG`: Your Firebase project JSON configuration.
 - `SESSION_TYPE`: `firebase`
-- `SESSION_ID`: Your unique session identifier (e.g., `FSGAMERz-session`).
+- `SESSION_ID`: Your unique session identifier (e.g., `YTxFSGAMERz-session`).
 
 ### 2. Local Setup
 1. Clone the repository:
@@ -51,12 +51,12 @@ FarhanBot-MD is optimized for cloud environments. Use the following secrets for 
    ```
 
 ## 📜 Credits & License
-- **Lead Developer**: [FSGAMERz](https://github.com/YTxFSGAMERz)
+- **Lead Developer**: [YTxFSGAMERz](https://github.com/YTxFSGAMERz)
 - **Base Library**: [Baileys](https://github.com/WhiskeySockets/Baileys)
 
 This project is licensed under the MIT License.
 
 ---
 <div align="center">
-  Built with ❤️ by <b>FSGAMERz</b>
+  Built with ❤️ by <b>YTxFSGAMERz</b>
 </div>
