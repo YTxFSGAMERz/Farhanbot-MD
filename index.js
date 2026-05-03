@@ -1,13 +1,13 @@
 /**
  * FarhanBot-MD - A WhatsApp Bot
- * Copyright (c) 2024 FSGAMERz
+ * Copyright (c) 2024 YTxFSGAMERz
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the MIT License.
  * 
  * Credits:
  * - Baileys Library by @adiwajshing
- * - Coded by FSGAMERz
+ * - Coded by YTxFSGAMERz
  */
 require('dotenv').config()
 require('./settings')
@@ -66,14 +66,7 @@ setInterval(() => {
     }
 }, 60_000) // every 1 minute
 
-// Memory monitoring - Restart if RAM gets too high
-setInterval(() => {
-    const used = process.memoryUsage().rss / 1024 / 1024
-    if (used > 400) {
-        console.log('⚠️ RAM too high (>400MB), restarting bot...')
-        process.exit(1) // Panel will auto-restart
-    }
-}, 30_000) // check every 30 seconds
+
 
 let phoneNumber = process.env.PHONE_NUMBER || ""
 let owner = JSON.parse(fs.readFileSync('./data/owner.json'))
@@ -107,7 +100,7 @@ app.get('/', (req, res) => {
 });
 
 let serverStarted = false;
-async function startFSGAMERzInc() {
+async function startYTxFSGAMERzInc() {
     if (!serverStarted) {
         app.listen(port, () => {
             console.log(`📡 Health check server listening on port ${port}`);
@@ -125,7 +118,7 @@ async function startFSGAMERzInc() {
         let state, saveCreds;
         if (process.env.SESSION_TYPE === 'firebase') {
             const { useFirestoreAuthState } = require('./lib/firebase_auth');
-            const result = await useFirestoreAuthState(process.env.SESSION_ID || 'FSGAMERz-session');
+            const result = await useFirestoreAuthState(process.env.SESSION_ID || 'YTxFSGAMERz-session');
             state = result.state;
             saveCreds = result.saveCreds;
             console.log('✅ Using Firebase Firestore for session storage');
@@ -136,7 +129,7 @@ async function startFSGAMERzInc() {
         }
         const msgRetryCounterCache = new NodeCache()
 
-        const FSGAMERzInc = makeWASocket({
+        const YTxFSGAMERzInc = makeWASocket({
             version, // Use the fetched latest version
             logger: pino({ level: 'silent' }),
             browser: ["FarhanBot-MD", "Safari", "17.0"],
@@ -165,41 +158,41 @@ async function startFSGAMERzInc() {
 
 
         // Save credentials when they update
-        FSGAMERzInc.ev.on('creds.update', saveCreds)
+        YTxFSGAMERzInc.ev.on('creds.update', saveCreds)
 
-    store.bind(FSGAMERzInc.ev)
+    store.bind(YTxFSGAMERzInc.ev)
 
     // Message handling
-    FSGAMERzInc.ev.on('messages.upsert', async chatUpdate => {
+    YTxFSGAMERzInc.ev.on('messages.upsert', async chatUpdate => {
         try {
             const mek = chatUpdate.messages[0]
             if (!mek.message) return
             mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
             if (mek.key && mek.key.remoteJid === 'status@broadcast') {
-                await handleStatus(FSGAMERzInc, chatUpdate);
+                await handleStatus(YTxFSGAMERzInc, chatUpdate);
                 return;
             }
             // In private mode, only block non-group messages (allow groups for moderation)
-            // Note: FSGAMERzInc.public is not synced, so we check mode in main.js instead
+            // Note: YTxFSGAMERzInc.public is not synced, so we check mode in main.js instead
             // This check is kept for backward compatibility but mainly blocks DMs
-            if (!FSGAMERzInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') {
+            if (!YTxFSGAMERzInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') {
                 const isGroup = mek.key?.remoteJid?.endsWith('@g.us')
                 if (!isGroup) return // Block DMs in private mode, but allow group messages
             }
             if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 
             // Clear message retry cache to prevent memory bloat
-            if (FSGAMERzInc?.msgRetryCounterCache) {
-                FSGAMERzInc.msgRetryCounterCache.clear()
+            if (YTxFSGAMERzInc?.msgRetryCounterCache) {
+                YTxFSGAMERzInc.msgRetryCounterCache.clear()
             }
 
             try {
-                await handleMessages(FSGAMERzInc, chatUpdate, true)
+                await handleMessages(YTxFSGAMERzInc, chatUpdate, true)
             } catch (err) {
                 console.error("Error in handleMessages:", err)
                 // Only try to send error message if we have a valid chatId
                 if (mek.key && mek.key.remoteJid) {
-                    await FSGAMERzInc.sendMessage(mek.key.remoteJid, {
+                    await YTxFSGAMERzInc.sendMessage(mek.key.remoteJid, {
                         text: '❌ An error occurred while processing your message.',
                         contextInfo: {
                             forwardingScore: 1,
@@ -219,7 +212,7 @@ async function startFSGAMERzInc() {
     })
 
     // Add these event handlers for better functionality
-    FSGAMERzInc.decodeJid = (jid) => {
+    YTxFSGAMERzInc.decodeJid = (jid) => {
         if (!jid) return jid
         if (/:\d+@/gi.test(jid)) {
             let decode = jidDecode(jid) || {}
@@ -227,37 +220,37 @@ async function startFSGAMERzInc() {
         } else return jid
     }
 
-    FSGAMERzInc.ev.on('contacts.update', update => {
+    YTxFSGAMERzInc.ev.on('contacts.update', update => {
         for (let contact of update) {
-            let id = FSGAMERzInc.decodeJid(contact.id)
+            let id = YTxFSGAMERzInc.decodeJid(contact.id)
             if (store && store.contacts) store.contacts[id] = { id, name: contact.notify }
         }
     })
 
-    FSGAMERzInc.getName = (jid, withoutContact = false) => {
-        id = FSGAMERzInc.decodeJid(jid)
-        withoutContact = FSGAMERzInc.withoutContact || withoutContact
+    YTxFSGAMERzInc.getName = (jid, withoutContact = false) => {
+        id = YTxFSGAMERzInc.decodeJid(jid)
+        withoutContact = YTxFSGAMERzInc.withoutContact || withoutContact
         let v
         if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
             v = store.contacts[id] || {}
-            if (!(v.name || v.subject)) v = FSGAMERzInc.groupMetadata(id) || {}
+            if (!(v.name || v.subject)) v = YTxFSGAMERzInc.groupMetadata(id) || {}
             resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).getNumber('international'))
         })
         else v = id === '0@s.whatsapp.net' ? {
             id,
             name: 'WhatsApp'
-        } : id === FSGAMERzInc.decodeJid(FSGAMERzInc.user.id) ?
-            FSGAMERzInc.user :
+        } : id === YTxFSGAMERzInc.decodeJid(YTxFSGAMERzInc.user.id) ?
+            YTxFSGAMERzInc.user :
             (store.contacts[id] || {})
         return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).getNumber('international')
     }
 
-    FSGAMERzInc.public = true
+    YTxFSGAMERzInc.public = true
 
-    FSGAMERzInc.serializeM = (m) => smsg(FSGAMERzInc, m, store)
+    YTxFSGAMERzInc.serializeM = (m) => smsg(YTxFSGAMERzInc, m, store)
 
     // Handle pairing code
-    if (pairingCode && !FSGAMERzInc.authState.creds.registered) {
+    if (pairingCode && !YTxFSGAMERzInc.authState.creds.registered) {
         if (useMobile) throw new Error('Cannot use pairing code with mobile api')
 
         let phoneNumber
@@ -279,7 +272,7 @@ async function startFSGAMERzInc() {
 
         setTimeout(async () => {
             try {
-                let code = await FSGAMERzInc.requestPairingCode(phoneNumber)
+                let code = await YTxFSGAMERzInc.requestPairingCode(phoneNumber)
                 code = code?.match(/.{1,4}/g)?.join("-") || code
                 console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
                 console.log(chalk.yellow(`\nPlease enter this code in your WhatsApp app:\n1. Open WhatsApp\n2. Go to Settings > Linked Devices\n3. Tap "Link a Device"\n4. Enter the code shown above`))
@@ -291,7 +284,7 @@ async function startFSGAMERzInc() {
     }
 
     // Connection handling
-    FSGAMERzInc.ev.on('connection.update', async (update) => {
+    YTxFSGAMERzInc.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update
         
         if (qr) {
@@ -304,12 +297,12 @@ async function startFSGAMERzInc() {
         }
         
         if (connection === 'open') {
-            console.log(chalk.green('✅ Connected to WhatsApp => ' + FSGAMERzInc.user.id.split(':')[0]))
+            console.log(chalk.green('✅ Connected to WhatsApp => ' + YTxFSGAMERzInc.user.id.split(':')[0]))
 
             if (!global.hasConnectedMessageSent) {
                 try {
-                    const botNumber = FSGAMERzInc.user.id.split(':')[0] + '@s.whatsapp.net';
-                    await FSGAMERzInc.sendMessage(botNumber, {
+                    const botNumber = YTxFSGAMERzInc.user.id.split(':')[0] + '@s.whatsapp.net';
+                    await YTxFSGAMERzInc.sendMessage(botNumber, {
                         text: `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!\n\n✅Make sure to join below channel`,
                         contextInfo: {
                             forwardingScore: 1,
@@ -356,7 +349,7 @@ async function startFSGAMERzInc() {
             if (!isLoggedOut) {
                 console.log(chalk.yellow('Reconnecting...'))
                 await delay(5000)
-                startFSGAMERzInc()
+                startYTxFSGAMERzInc()
             } else {
                 console.log(chalk.red('Connection closed because you logged out. Please re-authenticate.'))
             }
@@ -367,7 +360,7 @@ async function startFSGAMERzInc() {
     const antiCallNotified = new Set();
 
     // Anticall handler: block callers when enabled
-    FSGAMERzInc.ev.on('call', async (calls) => {
+    YTxFSGAMERzInc.ev.on('call', async (calls) => {
         try {
             const { readState: readAnticallState } = require('./commands/anticall');
             const state = readAnticallState();
@@ -378,10 +371,10 @@ async function startFSGAMERzInc() {
                 try {
                     // First: attempt to reject the call if supported
                     try {
-                        if (typeof FSGAMERzInc.rejectCall === 'function' && call.id) {
-                            await FSGAMERzInc.rejectCall(call.id, callerJid);
-                        } else if (typeof FSGAMERzInc.sendCallOfferAck === 'function' && call.id) {
-                            await FSGAMERzInc.sendCallOfferAck(call.id, callerJid, 'reject');
+                        if (typeof YTxFSGAMERzInc.rejectCall === 'function' && call.id) {
+                            await YTxFSGAMERzInc.rejectCall(call.id, callerJid);
+                        } else if (typeof YTxFSGAMERzInc.sendCallOfferAck === 'function' && call.id) {
+                            await YTxFSGAMERzInc.sendCallOfferAck(call.id, callerJid, 'reject');
                         }
                     } catch {}
 
@@ -389,12 +382,12 @@ async function startFSGAMERzInc() {
                     if (!antiCallNotified.has(callerJid)) {
                         antiCallNotified.add(callerJid);
                         setTimeout(() => antiCallNotified.delete(callerJid), 60000);
-                        await FSGAMERzInc.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
+                        await YTxFSGAMERzInc.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
                     }
                 } catch {}
                 // Then: block after a short delay to ensure rejection and message are processed
                 setTimeout(async () => {
-                    try { await FSGAMERzInc.updateBlockStatus(callerJid, 'block'); } catch {}
+                    try { await YTxFSGAMERzInc.updateBlockStatus(callerJid, 'block'); } catch {}
                 }, 800);
             }
         } catch (e) {
@@ -402,35 +395,35 @@ async function startFSGAMERzInc() {
         }
     });
 
-    FSGAMERzInc.ev.on('group-participants.update', async (update) => {
-        await handleGroupParticipantUpdate(FSGAMERzInc, update);
+    YTxFSGAMERzInc.ev.on('group-participants.update', async (update) => {
+        await handleGroupParticipantUpdate(YTxFSGAMERzInc, update);
     });
 
-    FSGAMERzInc.ev.on('messages.upsert', async (m) => {
+    YTxFSGAMERzInc.ev.on('messages.upsert', async (m) => {
         if (m.messages[0].key && m.messages[0].key.remoteJid === 'status@broadcast') {
-            await handleStatus(FSGAMERzInc, m);
+            await handleStatus(YTxFSGAMERzInc, m);
         }
     });
 
-    FSGAMERzInc.ev.on('status.update', async (status) => {
-        await handleStatus(FSGAMERzInc, status);
+    YTxFSGAMERzInc.ev.on('status.update', async (status) => {
+        await handleStatus(YTxFSGAMERzInc, status);
     });
 
-    FSGAMERzInc.ev.on('messages.reaction', async (status) => {
-        await handleStatus(FSGAMERzInc, status);
+    YTxFSGAMERzInc.ev.on('messages.reaction', async (status) => {
+        await handleStatus(YTxFSGAMERzInc, status);
     });
 
-    return FSGAMERzInc
+    return YTxFSGAMERzInc
     } catch (error) {
-        console.error('Error in startFSGAMERzInc:', error)
+        console.error('Error in startYTxFSGAMERzInc:', error)
         await delay(5000)
-        startFSGAMERzInc()
+        startYTxFSGAMERzInc()
     }
 }
 
 
 // Start the bot with error handling
-startFSGAMERzInc().catch(error => {
+startYTxFSGAMERzInc().catch(error => {
     console.error('Fatal error:', error)
     process.exit(1)
 })
