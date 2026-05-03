@@ -7,7 +7,7 @@ async function helpCommand(sock, chatId, message) {
 ╔═══════════════════╗
    *🤖 ${settings.botName || 'FarhanBot-MD'}*  
    Version: *${settings.version || '3.0.0'}*
-   by ${settings.botOwner || 'FSGAMERz'}
+   by ${settings.botOwner || 'YTxFSGAMERz'}
    YT : ${global.ytch}
 ╚═══════════════════╝
 
@@ -252,7 +252,7 @@ Join our channel for updates:`;
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '',
-                        newsletterName: 'FarhanBot MD by FSGAMERz',
+                        newsletterName: 'FarhanBot MD by YTxFSGAMERz',
                         serverMessageId: -1
                     } 
                 }
