@@ -306,22 +306,25 @@ async function startFarhanBotInc() {
         if (connection === 'open') {
             console.log(chalk.green('✅ Connected to WhatsApp => ' + FarhanBotInc.user.id.split(':')[0]))
 
-            try {
-                const botNumber = FarhanBotInc.user.id.split(':')[0] + '@s.whatsapp.net';
-                await FarhanBotInc.sendMessage(botNumber, {
-                    text: `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!\n\n✅Make sure to join below channel`,
-                    contextInfo: {
-                        forwardingScore: 1,
-                        isForwarded: true,
-                        forwardedNewsletterMessageInfo: {
-                            newsletterJid: '',
-                            newsletterName: 'Farhanbot-MD',
-                            serverMessageId: -1
+            if (!global.hasConnectedMessageSent) {
+                try {
+                    const botNumber = FarhanBotInc.user.id.split(':')[0] + '@s.whatsapp.net';
+                    await FarhanBotInc.sendMessage(botNumber, {
+                        text: `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!\n\n✅Make sure to join below channel`,
+                        contextInfo: {
+                            forwardingScore: 1,
+                            isForwarded: true,
+                            forwardedNewsletterMessageInfo: {
+                                newsletterJid: '',
+                                newsletterName: 'Farhanbot-MD',
+                                serverMessageId: -1
+                            }
                         }
-                    }
-                });
-            } catch (error) {
-                console.error('Error sending connection message:', error.message)
+                    });
+                    global.hasConnectedMessageSent = true;
+                } catch (error) {
+                    console.error('Error sending connection message:', error.message)
+                }
             }
 
             await delay(1999)
