@@ -5,9 +5,9 @@ const path = require('path');
 async function helpCommand(sock, chatId, message) {
     const helpMessage = `
 ╔═══════════════════╗
-   *🤖 ${settings.botName || 'Farhanbot-MD'}*  
+   *🤖 ${settings.botName || 'FarhanBot-MD'}*  
    Version: *${settings.version || '3.0.0'}*
-   by ${settings.botOwner || 'Farhan'}
+   by ${settings.botOwner || 'FSGAMERz'}
    YT : ${global.ytch}
 ╚═══════════════════╝
 
@@ -238,7 +238,7 @@ Join our channel for updates:`;
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '',
-                        newsletterName: 'Farhanbot MD',
+                        newsletterName: 'FarhanBot MD',
                         serverMessageId: -1
                     }
                 }
@@ -252,7 +252,7 @@ Join our channel for updates:`;
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '',
-                        newsletterName: 'Farhanbot MD by Farhan',
+                        newsletterName: 'FarhanBot MD by FSGAMERz',
                         serverMessageId: -1
                     } 
                 }
