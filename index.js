@@ -1,13 +1,13 @@
 /**
- * Farhanbot-MD - A WhatsApp Bot
- * Copyright (c) 2024 Farhan
+ * FarhanBot-MD - A WhatsApp Bot
+ * Copyright (c) 2024 FSGAMERz
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the MIT License.
  * 
  * Credits:
  * - Baileys Library by @adiwajshing
- * - Coded by Farhan
+ * - Coded by FSGAMERz
  */
 require('dotenv').config()
 require('./settings')
@@ -78,7 +78,7 @@ setInterval(() => {
 let phoneNumber = process.env.PHONE_NUMBER || ""
 let owner = JSON.parse(fs.readFileSync('./data/owner.json'))
 
-global.botname = "Farhanbot-MD"
+global.botname = "FarhanBot-MD"
 global.themeemoji = "•"
 const pairingCode = !!phoneNumber || process.argv.includes("--pairing-code") || process.env.PAIRING_CODE === "true"
 const useMobile = process.argv.includes("--mobile")
@@ -103,11 +103,11 @@ const app = express();
 const port = process.env.PORT || 7860;
 
 app.get('/', (req, res) => {
-    res.send('Farhanbot-MD is running!');
+    res.send('FarhanBot-MD is running!');
 });
 
 let serverStarted = false;
-async function startFarhanBotInc() {
+async function startFSGAMERzInc() {
     if (!serverStarted) {
         app.listen(port, () => {
             console.log(`📡 Health check server listening on port ${port}`);
@@ -125,7 +125,7 @@ async function startFarhanBotInc() {
         let state, saveCreds;
         if (process.env.SESSION_TYPE === 'firebase') {
             const { useFirestoreAuthState } = require('./lib/firebase_auth');
-            const result = await useFirestoreAuthState(process.env.SESSION_ID || 'farhanbot-session');
+            const result = await useFirestoreAuthState(process.env.SESSION_ID || 'FSGAMERz-session');
             state = result.state;
             saveCreds = result.saveCreds;
             console.log('✅ Using Firebase Firestore for session storage');
@@ -136,10 +136,10 @@ async function startFarhanBotInc() {
         }
         const msgRetryCounterCache = new NodeCache()
 
-        const FarhanBotInc = makeWASocket({
+        const FSGAMERzInc = makeWASocket({
             version, // Use the fetched latest version
             logger: pino({ level: 'silent' }),
-            browser: ["Farhanbot-MD", "Safari", "17.0"],
+            browser: ["FarhanBot-MD", "Safari", "17.0"],
             auth: {
                 creds: state.creds,
                 keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -165,48 +165,48 @@ async function startFarhanBotInc() {
 
 
         // Save credentials when they update
-        FarhanBotInc.ev.on('creds.update', saveCreds)
+        FSGAMERzInc.ev.on('creds.update', saveCreds)
 
-    store.bind(FarhanBotInc.ev)
+    store.bind(FSGAMERzInc.ev)
 
     // Message handling
-    FarhanBotInc.ev.on('messages.upsert', async chatUpdate => {
+    FSGAMERzInc.ev.on('messages.upsert', async chatUpdate => {
         try {
             const mek = chatUpdate.messages[0]
             if (!mek.message) return
             mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
             if (mek.key && mek.key.remoteJid === 'status@broadcast') {
-                await handleStatus(FarhanBotInc, chatUpdate);
+                await handleStatus(FSGAMERzInc, chatUpdate);
                 return;
             }
             // In private mode, only block non-group messages (allow groups for moderation)
-            // Note: FarhanBotInc.public is not synced, so we check mode in main.js instead
+            // Note: FSGAMERzInc.public is not synced, so we check mode in main.js instead
             // This check is kept for backward compatibility but mainly blocks DMs
-            if (!FarhanBotInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') {
+            if (!FSGAMERzInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') {
                 const isGroup = mek.key?.remoteJid?.endsWith('@g.us')
                 if (!isGroup) return // Block DMs in private mode, but allow group messages
             }
             if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 
             // Clear message retry cache to prevent memory bloat
-            if (FarhanBotInc?.msgRetryCounterCache) {
-                FarhanBotInc.msgRetryCounterCache.clear()
+            if (FSGAMERzInc?.msgRetryCounterCache) {
+                FSGAMERzInc.msgRetryCounterCache.clear()
             }
 
             try {
-                await handleMessages(FarhanBotInc, chatUpdate, true)
+                await handleMessages(FSGAMERzInc, chatUpdate, true)
             } catch (err) {
                 console.error("Error in handleMessages:", err)
                 // Only try to send error message if we have a valid chatId
                 if (mek.key && mek.key.remoteJid) {
-                    await FarhanBotInc.sendMessage(mek.key.remoteJid, {
+                    await FSGAMERzInc.sendMessage(mek.key.remoteJid, {
                         text: '❌ An error occurred while processing your message.',
                         contextInfo: {
                             forwardingScore: 1,
                             isForwarded: true,
                             forwardedNewsletterMessageInfo: {
                                 newsletterJid: '',
-                                newsletterName: 'Farhanbot-MD',
+                                newsletterName: 'FarhanBot-MD',
                                 serverMessageId: -1
                             }
                         }
@@ -219,7 +219,7 @@ async function startFarhanBotInc() {
     })
 
     // Add these event handlers for better functionality
-    FarhanBotInc.decodeJid = (jid) => {
+    FSGAMERzInc.decodeJid = (jid) => {
         if (!jid) return jid
         if (/:\d+@/gi.test(jid)) {
             let decode = jidDecode(jid) || {}
@@ -227,37 +227,37 @@ async function startFarhanBotInc() {
         } else return jid
     }
 
-    FarhanBotInc.ev.on('contacts.update', update => {
+    FSGAMERzInc.ev.on('contacts.update', update => {
         for (let contact of update) {
-            let id = FarhanBotInc.decodeJid(contact.id)
+            let id = FSGAMERzInc.decodeJid(contact.id)
             if (store && store.contacts) store.contacts[id] = { id, name: contact.notify }
         }
     })
 
-    FarhanBotInc.getName = (jid, withoutContact = false) => {
-        id = FarhanBotInc.decodeJid(jid)
-        withoutContact = FarhanBotInc.withoutContact || withoutContact
+    FSGAMERzInc.getName = (jid, withoutContact = false) => {
+        id = FSGAMERzInc.decodeJid(jid)
+        withoutContact = FSGAMERzInc.withoutContact || withoutContact
         let v
         if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
             v = store.contacts[id] || {}
-            if (!(v.name || v.subject)) v = FarhanBotInc.groupMetadata(id) || {}
+            if (!(v.name || v.subject)) v = FSGAMERzInc.groupMetadata(id) || {}
             resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).getNumber('international'))
         })
         else v = id === '0@s.whatsapp.net' ? {
             id,
             name: 'WhatsApp'
-        } : id === FarhanBotInc.decodeJid(FarhanBotInc.user.id) ?
-            FarhanBotInc.user :
+        } : id === FSGAMERzInc.decodeJid(FSGAMERzInc.user.id) ?
+            FSGAMERzInc.user :
             (store.contacts[id] || {})
         return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).getNumber('international')
     }
 
-    FarhanBotInc.public = true
+    FSGAMERzInc.public = true
 
-    FarhanBotInc.serializeM = (m) => smsg(FarhanBotInc, m, store)
+    FSGAMERzInc.serializeM = (m) => smsg(FSGAMERzInc, m, store)
 
     // Handle pairing code
-    if (pairingCode && !FarhanBotInc.authState.creds.registered) {
+    if (pairingCode && !FSGAMERzInc.authState.creds.registered) {
         if (useMobile) throw new Error('Cannot use pairing code with mobile api')
 
         let phoneNumber
@@ -279,7 +279,7 @@ async function startFarhanBotInc() {
 
         setTimeout(async () => {
             try {
-                let code = await FarhanBotInc.requestPairingCode(phoneNumber)
+                let code = await FSGAMERzInc.requestPairingCode(phoneNumber)
                 code = code?.match(/.{1,4}/g)?.join("-") || code
                 console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
                 console.log(chalk.yellow(`\nPlease enter this code in your WhatsApp app:\n1. Open WhatsApp\n2. Go to Settings > Linked Devices\n3. Tap "Link a Device"\n4. Enter the code shown above`))
@@ -291,7 +291,7 @@ async function startFarhanBotInc() {
     }
 
     // Connection handling
-    FarhanBotInc.ev.on('connection.update', async (update) => {
+    FSGAMERzInc.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update
         
         if (qr) {
@@ -304,19 +304,19 @@ async function startFarhanBotInc() {
         }
         
         if (connection === 'open') {
-            console.log(chalk.green('✅ Connected to WhatsApp => ' + FarhanBotInc.user.id.split(':')[0]))
+            console.log(chalk.green('✅ Connected to WhatsApp => ' + FSGAMERzInc.user.id.split(':')[0]))
 
             if (!global.hasConnectedMessageSent) {
                 try {
-                    const botNumber = FarhanBotInc.user.id.split(':')[0] + '@s.whatsapp.net';
-                    await FarhanBotInc.sendMessage(botNumber, {
+                    const botNumber = FSGAMERzInc.user.id.split(':')[0] + '@s.whatsapp.net';
+                    await FSGAMERzInc.sendMessage(botNumber, {
                         text: `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!\n\n✅Make sure to join below channel`,
                         contextInfo: {
                             forwardingScore: 1,
                             isForwarded: true,
                             forwardedNewsletterMessageInfo: {
                                 newsletterJid: '',
-                                newsletterName: 'Farhanbot-MD',
+                                newsletterName: 'FarhanBot-MD',
                                 serverMessageId: -1
                             }
                         }
@@ -328,7 +328,7 @@ async function startFarhanBotInc() {
             }
 
             await delay(1999)
-            console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ ${global.botname || 'Farhanbot-MD'} ]`)}\n\n`))
+            console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ ${global.botname || 'FarhanBot-MD'} ]`)}\n\n`))
             console.log(chalk.cyan(`< ================================================== >`))
             console.log(chalk.cyan(`< ================================================== >`))
             console.log(chalk.green(`${global.themeemoji || '•'} 🤖 Bot Connected Successfully! ✅`))
@@ -356,7 +356,7 @@ async function startFarhanBotInc() {
             if (!isLoggedOut) {
                 console.log(chalk.yellow('Reconnecting...'))
                 await delay(5000)
-                startFarhanBotInc()
+                startFSGAMERzInc()
             } else {
                 console.log(chalk.red('Connection closed because you logged out. Please re-authenticate.'))
             }
@@ -367,7 +367,7 @@ async function startFarhanBotInc() {
     const antiCallNotified = new Set();
 
     // Anticall handler: block callers when enabled
-    FarhanBotInc.ev.on('call', async (calls) => {
+    FSGAMERzInc.ev.on('call', async (calls) => {
         try {
             const { readState: readAnticallState } = require('./commands/anticall');
             const state = readAnticallState();
@@ -378,10 +378,10 @@ async function startFarhanBotInc() {
                 try {
                     // First: attempt to reject the call if supported
                     try {
-                        if (typeof FarhanBotInc.rejectCall === 'function' && call.id) {
-                            await FarhanBotInc.rejectCall(call.id, callerJid);
-                        } else if (typeof FarhanBotInc.sendCallOfferAck === 'function' && call.id) {
-                            await FarhanBotInc.sendCallOfferAck(call.id, callerJid, 'reject');
+                        if (typeof FSGAMERzInc.rejectCall === 'function' && call.id) {
+                            await FSGAMERzInc.rejectCall(call.id, callerJid);
+                        } else if (typeof FSGAMERzInc.sendCallOfferAck === 'function' && call.id) {
+                            await FSGAMERzInc.sendCallOfferAck(call.id, callerJid, 'reject');
                         }
                     } catch {}
 
@@ -389,12 +389,12 @@ async function startFarhanBotInc() {
                     if (!antiCallNotified.has(callerJid)) {
                         antiCallNotified.add(callerJid);
                         setTimeout(() => antiCallNotified.delete(callerJid), 60000);
-                        await FarhanBotInc.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
+                        await FSGAMERzInc.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
                     }
                 } catch {}
                 // Then: block after a short delay to ensure rejection and message are processed
                 setTimeout(async () => {
-                    try { await FarhanBotInc.updateBlockStatus(callerJid, 'block'); } catch {}
+                    try { await FSGAMERzInc.updateBlockStatus(callerJid, 'block'); } catch {}
                 }, 800);
             }
         } catch (e) {
@@ -402,35 +402,35 @@ async function startFarhanBotInc() {
         }
     });
 
-    FarhanBotInc.ev.on('group-participants.update', async (update) => {
-        await handleGroupParticipantUpdate(FarhanBotInc, update);
+    FSGAMERzInc.ev.on('group-participants.update', async (update) => {
+        await handleGroupParticipantUpdate(FSGAMERzInc, update);
     });
 
-    FarhanBotInc.ev.on('messages.upsert', async (m) => {
+    FSGAMERzInc.ev.on('messages.upsert', async (m) => {
         if (m.messages[0].key && m.messages[0].key.remoteJid === 'status@broadcast') {
-            await handleStatus(FarhanBotInc, m);
+            await handleStatus(FSGAMERzInc, m);
         }
     });
 
-    FarhanBotInc.ev.on('status.update', async (status) => {
-        await handleStatus(FarhanBotInc, status);
+    FSGAMERzInc.ev.on('status.update', async (status) => {
+        await handleStatus(FSGAMERzInc, status);
     });
 
-    FarhanBotInc.ev.on('messages.reaction', async (status) => {
-        await handleStatus(FarhanBotInc, status);
+    FSGAMERzInc.ev.on('messages.reaction', async (status) => {
+        await handleStatus(FSGAMERzInc, status);
     });
 
-    return FarhanBotInc
+    return FSGAMERzInc
     } catch (error) {
-        console.error('Error in startFarhanBotInc:', error)
+        console.error('Error in startFSGAMERzInc:', error)
         await delay(5000)
-        startFarhanBotInc()
+        startFSGAMERzInc()
     }
 }
 
 
 // Start the bot with error handling
-startFarhanBotInc().catch(error => {
+startFSGAMERzInc().catch(error => {
     console.error('Fatal error:', error)
     process.exit(1)
 })
