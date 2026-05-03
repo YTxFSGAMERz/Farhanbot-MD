@@ -16,8 +16,8 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git config --global user.email "bot@farhan.com"
-          git config --global user.name "FarhanBot"
+          git config --global user.email "bot@YTxFSGAMERz.com"
+          git config --global user.name "YTxFSGAMERz"
           git lfs install
           git checkout --orphan latest_branch
           git add -A
