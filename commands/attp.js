@@ -14,7 +14,7 @@ async function attpCommand(sock, chatId, message) {
 
     try {
         const mp4Buffer = await renderBlinkingVideoWithFfmpeg(text);
-        const webpPath = await writeExifVid(mp4Buffer, { packname: 'Farhanbot-MD' });
+        const webpPath = await writeExifVid(mp4Buffer, { packname: 'FarhanBot-MD' });
         const webpBuffer = fs.readFileSync(webpPath);
         try { fs.unlinkSync(webpPath) } catch (_) {}
         await sock.sendMessage(chatId, { sticker: webpBuffer }, { quoted: message });
