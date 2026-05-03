@@ -5,9 +5,9 @@ const rootDir = __dirname;
 const excludeDirs = ["node_modules", ".git", "session", "FarhanMedia", "Media"];
 
 const replacements = [
-    { regex: /FSGAMERz-MD/g, replace: "FarhanBot-MD" },
-    { regex: /FSGAMERz MD/g, replace: "FarhanBot MD" },
-    // Also handling the stylized knightbot version we changed to FSGAMERz-MD if we want, but wait, FSGAMERz-MD captures all of them now.
+    { regex: /YTxFSGAMERz-MD/g, replace: "FarhanBot-MD" },
+    { regex: /YTxFSGAMERz MD/g, replace: "FarhanBot MD" },
+    // Also handling the stylized knightbot version we changed to YTxFSGAMERz-MD if we want, but wait, YTxFSGAMERz-MD captures all of them now.
 ];
 
 function processDirectory(directory) {
