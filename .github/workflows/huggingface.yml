@@ -1,0 +1,26 @@
+name: Sync to Hugging Face hub
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "bot@farhan.com"
+          git config --global user.name "FarhanBot"
+          git lfs install
+          git checkout --orphan latest_branch
+          git add -A
+          git commit -m "Deploy Farhanbot-MD"
+          git remote add hf https://YTxFSGAMERz:$HF_TOKEN@huggingface.co/spaces/YTxFSGAMERz/farhanbot-md
+          git push --force hf latest_branch:main
