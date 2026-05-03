@@ -147,7 +147,7 @@ const soraCommand = require('./commands/sora');
 global.packname = settings.packname;
 global.author = settings.author;
 global.channelLink = "";
-global.ytch = "FSGAMERz";
+global.ytch = "YTxFSGAMERz";
 
 // Add this near the top of main.js with other global configurations
 const channelInfo = {
