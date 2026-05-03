@@ -6,14 +6,14 @@ const rootDir = __dirname;
 const excludeDirs = ["node_modules", ".git", "session", "FarhanMedia"];
 
 const replacements = [
-    { regex: /Farhanbot-MD/gi, replace: "FSGAMERz-MD" },
-    { regex: /Farhanbot MD/gi, replace: "FSGAMERz MD" },
-    { regex: /Farhanbot/gi, replace: "FSGAMERz" },
+    { regex: /Farhanbot-MD/gi, replace: "YTxFSGAMERz-MD" },
+    { regex: /Farhanbot MD/gi, replace: "YTxFSGAMERz MD" },
+    { regex: /Farhanbot/gi, replace: "YTxFSGAMERz" },
     { regex: /FarhanBotInc/g, replace: "botSocket" },
     { regex: /FarhanMedia/g, replace: "Media" },
-    { regex: /Farhan/gi, replace: "FSGAMERz" },
-    { regex: /KnightBot-MD/gi, replace: "FSGAMERz-MD" },
-    { regex: /𝐊𝐧𝐢𝐠𝐡𝐭𝐁𝐨𝐭-𝐌𝐃/gi, replace: "FSGAMERz-MD" }
+    { regex: /Farhan/gi, replace: "YTxFSGAMERz" },
+    { regex: /KnightBot-MD/gi, replace: "YTxFSGAMERz-MD" },
+    { regex: /𝐊𝐧𝐢𝐠𝐡𝐭𝐁𝐨𝐭-𝐌𝐃/gi, replace: "YTxFSGAMERz-MD" }
 ];
 
 function processDirectory(directory) {
@@ -34,8 +34,8 @@ function processDirectory(directory) {
                 if (file === "package-lock.json") continue;
                 
                 // Keep the GitHub URL intact
-                const originalGithubUrl = "github.com/YTxFSGAMERz/FSGAMERz-MD"; 
-                // Wait, if it replaces Farhanbot-MD it becomes FSGAMERz-MD
+                const originalGithubUrl = "github.com/YTxFSGAMERz/YTxFSGAMERz-MD"; 
+                // Wait, if it replaces Farhanbot-MD it becomes YTxFSGAMERz-MD
 
                 for (const { regex, replace } of replacements) {
                     if (regex.test(content)) {
@@ -45,7 +45,7 @@ function processDirectory(directory) {
                 }
 
                 // Restore original Github URL
-                content = content.replace(/github\.com\/YTxFSGAMERz\/FSGAMERz-MD/g, "github.com/YTxFSGAMERz/Farhanbot-MD");
+                content = content.replace(/github\.com\/YTxFSGAMERz\/YTxFSGAMERz-MD/g, "github.com/YTxFSGAMERz/Farhanbot-MD");
 
                 if (changed) {
                     fs.writeFileSync(fullPath, content, "utf-8");
