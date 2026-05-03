@@ -1,5 +1,5 @@
 ---
-title: Farhanbot MD
+title: FarhanBot MD
 emoji: 🤖
 colorFrom: blue
 colorTo: indigo
@@ -7,16 +7,16 @@ sdk: docker
 pinned: false
 ---
 
-# Farhanbot-MD
+# FarhanBot-MD
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Farhanbot--MD-blue?style=for-the-badge&logo=whatsapp" alt="Farhanbot-MD">
+  <img src="https://img.shields.io/badge/FSGAMERz--MD-blue?style=for-the-badge&logo=whatsapp" alt="FarhanBot-MD">
 </div>
 
 ---
 
 ## 🌟 Overview
-**Farhanbot-MD** is a professional-grade, multi-device WhatsApp bot designed for efficiency, reliability, and ease of use. It features a robust command system, automated media handling, and cloud-native persistence via Firebase.
+**FarhanBot-MD** is a professional-grade, multi-device WhatsApp bot designed for efficiency, reliability, and ease of use. It features a robust command system, automated media handling, and cloud-native persistence via Firebase.
 
 ## 🚀 Key Features
 - **Multi-Device Support**: Connect seamlessly using Baileys MD.
@@ -29,16 +29,16 @@ pinned: false
 ## 🛠️ Setup & Deployment
 
 ### 1. Cloud Deployment (Hugging Face / Others)
-Farhanbot-MD is optimized for cloud environments. Use the following secrets for Firebase-backed persistence:
+FarhanBot-MD is optimized for cloud environments. Use the following secrets for Firebase-backed persistence:
 - `FIREBASE_CONFIG`: Your Firebase project JSON configuration.
 - `SESSION_TYPE`: `firebase`
-- `SESSION_ID`: Your unique session identifier (e.g., `farhanbot-session`).
+- `SESSION_ID`: Your unique session identifier (e.g., `FSGAMERz-session`).
 
 ### 2. Local Setup
 1. Clone the repository:
    ```bash
    git clone https://github.com/YTxFSGAMERz/Farhanbot-MD.git
-   cd Farhanbot-MD
+   cd FarhanBot-MD
    ```
 2. Install dependencies:
    ```bash
@@ -51,12 +51,12 @@ Farhanbot-MD is optimized for cloud environments. Use the following secrets for 
    ```
 
 ## 📜 Credits & License
-- **Lead Developer**: [Farhan](https://github.com/YTxFSGAMERz)
+- **Lead Developer**: [FSGAMERz](https://github.com/YTxFSGAMERz)
 - **Base Library**: [Baileys](https://github.com/WhiskeySockets/Baileys)
 
 This project is licensed under the MIT License.
 
 ---
 <div align="center">
-  Built with ❤️ by <b>Farhan</b>
+  Built with ❤️ by <b>FSGAMERz</b>
 </div>
