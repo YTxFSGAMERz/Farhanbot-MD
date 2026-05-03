@@ -147,7 +147,7 @@ const soraCommand = require('./commands/sora');
 global.packname = settings.packname;
 global.author = settings.author;
 global.channelLink = "";
-global.ytch = "Farhan";
+global.ytch = "FSGAMERz";
 
 // Add this near the top of main.js with other global configurations
 const channelInfo = {
@@ -156,7 +156,7 @@ const channelInfo = {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
             newsletterJid: '',
-            newsletterName: 'Farhanbot-MD',
+            newsletterName: 'FarhanBot-MD',
             serverMessageId: -1
         }
     }
