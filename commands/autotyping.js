@@ -1,5 +1,5 @@
 /**
- * Farhanbot-MD - A WhatsApp Bot
+ * FarhanBot-MD - A WhatsApp Bot
  * Autotyping Command - Shows fake typing status
  */
 
@@ -32,7 +32,7 @@ async function autotypingCommand(sock, chatId, message) {
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '',
-                        newsletterName: 'Farhanbot MD',
+                        newsletterName: 'FarhanBot MD',
                         serverMessageId: -1
                     }
                 }
@@ -63,7 +63,7 @@ async function autotypingCommand(sock, chatId, message) {
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '',
-                            newsletterName: 'Farhanbot MD',
+                            newsletterName: 'FarhanBot MD',
                             serverMessageId: -1
                         }
                     }
@@ -86,7 +86,7 @@ async function autotypingCommand(sock, chatId, message) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '',
-                    newsletterName: 'Farhanbot MD',
+                    newsletterName: 'FarhanBot MD',
                     serverMessageId: -1
                 }
             }
@@ -101,7 +101,7 @@ async function autotypingCommand(sock, chatId, message) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '',
-                    newsletterName: 'Farhanbot MD',
+                    newsletterName: 'FarhanBot MD',
                     serverMessageId: -1
                 }
             }
